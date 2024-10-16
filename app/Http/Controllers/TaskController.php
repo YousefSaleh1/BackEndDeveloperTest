@@ -17,7 +17,11 @@ class TaskController extends Controller
     protected $TaskService;
 
     /**
+     * TaskController constructor.
      *
+     * Initializes the TaskService instance, which handles the business logic for task operations.
+     *
+     * @param TaskService $TaskService The service responsible for managing tasks.
      */
     public function __construct(TaskService $TaskService)
     {

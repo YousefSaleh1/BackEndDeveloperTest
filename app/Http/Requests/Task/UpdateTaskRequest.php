@@ -6,6 +6,7 @@ use App\Services\ApiResponseService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateTaskRequest extends FormRequest
 {
@@ -15,7 +16,8 @@ class UpdateTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $task = $this->route('task');
+        return Auth::check() && Auth::user()->id == $task->user_id;
     }
 
     /**

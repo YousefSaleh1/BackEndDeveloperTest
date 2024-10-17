@@ -54,6 +54,10 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        if (auth()->id() !== $task->user_id) {
+            return ApiResponseService::errorResponse('Unauthorized access to this task.', 403);
+        }
+
         return ApiResponseService::successResponse(new TaskResource($task), 'Task retrieved successfully');
     }
 
@@ -71,6 +75,10 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        if (auth()->id() !== $task->user_id) {
+            return ApiResponseService::errorResponse('Unauthorized access to this task.', 403);
+        }
+
         $task->delete();
         return ApiResponseService::successResponse(null, 'Task deleted successfully');
     }

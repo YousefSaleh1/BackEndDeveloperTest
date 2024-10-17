@@ -3,15 +3,12 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class AuthService
 {
-    use ApiResponseTrait;
-
     /**
      * Registers a new user in the system.
      *
@@ -36,7 +33,7 @@ class AuthService
             // Log the error message for debugging purposes
             Log::error('User registration failed: ' . $e->getMessage());
             // Throw an exception with a failed response
-            throw new HttpResponseException($this->errorResponse('User registration failed', 500));
+            throw new HttpResponseException(ApiResponseService::errorResponse('User registration failed', 500));
         }
     }
 
@@ -54,7 +51,7 @@ class AuthService
 
         // Verify the password
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            throw new HttpResponseException($this->errorResponse('The provided credentials are incorrect.', 401));
+            throw new HttpResponseException(ApiResponseService::errorResponse('The provided credentials are incorrect.', 401));
         }
 
         // Create a token for the user and return it

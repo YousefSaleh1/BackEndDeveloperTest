@@ -2,14 +2,13 @@
 
 namespace App\Http\Requests\Task;
 
-use app\Traits\ApiResponseTrait;
+use App\Services\ApiResponseService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
 class UpdateTaskRequest extends FormRequest
 {
-    use ApiResponseTrait;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -74,6 +73,6 @@ class UpdateTaskRequest extends FormRequest
     protected function failedValidation(Validator $Validator)
     {
         $errors = $Validator->errors()->all();
-        throw new HttpResponseException($this->errorResponse('validation_error', 422, $errors));
+        throw new HttpResponseException(ApiResponseService::errorResponse('validation_error', 422, $errors));
     }
 }

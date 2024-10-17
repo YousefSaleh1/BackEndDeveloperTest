@@ -6,14 +6,12 @@ use App\Http\Requests\Task\StoreTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
+use App\Services\ApiResponseService;
 use App\Services\TaskService;
-use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    // Trait used to standardize API responses
-    use ApiResponseTrait;
 
     protected $TaskService;
 
@@ -38,7 +36,7 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $tasks = $this->TaskService->getPaginatedTasks($request->input('per_page', 10), $request->input('status'));
-        return $this->resourcePaginated(TaskResource::collection($tasks), 'Tasks retrieved successfully');
+        return ApiResponseService::resourcePaginated(TaskResource::collection($tasks), 'Tasks retrieved successfully');
     }
 
 
@@ -48,7 +46,7 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
         $task = $this->TaskService->createTask($request->validated());
-        return $this->successResponse(new TaskResource($task), 'Task created successfully', 201);
+        return ApiResponseService::successResponse(new TaskResource($task), 'Task created successfully', 201);
     }
 
     /**
@@ -56,7 +54,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return $this->successResponse(new TaskResource($task), 'Task retrieved successfully');
+        return ApiResponseService::successResponse(new TaskResource($task), 'Task retrieved successfully');
     }
 
     /**
@@ -65,7 +63,7 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $task = $this->TaskService->updateTask($request->validated(), $task);
-        return $this->successResponse(new TaskResource($task), 'Task updated successfully');
+        return ApiResponseService::successResponse(new TaskResource($task), 'Task updated successfully');
     }
 
     /**
@@ -74,6 +72,6 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
-        return $this->successResponse(null, 'Task deleted successfully');
+        return ApiResponseService::successResponse(null, 'Task deleted successfully');
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use app\Traits\ApiResponseTrait;
 use App\Models\Task;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
@@ -10,8 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class TaskService
 {
-    use ApiResponseTrait;
-
     /**
      * Get paginated list of tasks, with optional status filter.
      *
@@ -46,7 +43,7 @@ class TaskService
             // Log the error message for debugging purposes
             Log::error('Task create failed: ' . $th->getMessage());
             // Throw an HTTP response exception with a failure message
-            throw new HttpResponseException($this->errorResponse('Task create failed', 500));
+            throw new HttpResponseException(ApiResponseService::errorResponse('Task create failed', 500));
         }
     }
 
@@ -67,7 +64,7 @@ class TaskService
             // Log the error message for debugging purposes
             Log::error('Task update failed: ' . $th->getMessage());
             // Throw an HTTP response exception with a failure message
-            throw new HttpResponseException($this->errorResponse('Task update failed', 500));
+            throw new HttpResponseException(ApiResponseService::errorResponse('Task update failed', 500));
         }
     }
 }

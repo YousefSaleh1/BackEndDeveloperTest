@@ -13,9 +13,7 @@ class TaskObserver
      */
     public function creating(Task $task): void
     {
-        if (Auth::check()) {
-            $task->user_id = Auth::id();
-        }
+        $task->user_id = Auth::id();
     }
 
     /**

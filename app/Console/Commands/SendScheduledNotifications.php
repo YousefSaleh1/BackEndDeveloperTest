@@ -20,7 +20,7 @@ class SendScheduledNotifications extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send task reminders for scheduled notifications that are due within the next hour';
 
     /**
      * Execute the console command.

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Traits;
+namespace App\Services;
 
-trait ApiResponseTrait
+class ApiResponseService
 {
-
     /**
      * Return a JSON Response For Auth mathod with token
      *
@@ -14,14 +13,15 @@ trait ApiResponseTrait
      * @param int $status the HTTP Status code
      * @return \Illuminate\Http\JsonResponse The JSON response
      */
-    public function apiResponse($data,$token,$message,$status){
+    public static function apiResponse($data, $token, $message, $status)
+    {
         $array = [
-            'data' =>$data,
-            'message' =>$message,
+            'data' => $data,
+            'message' => $message,
             'access_token' => $token,
             'token_type' => 'Bearer',
         ];
-        return response()->json($array,$status);
+        return response()->json($array, $status);
     }
 
     /**
@@ -32,11 +32,12 @@ trait ApiResponseTrait
      * @param int $status the HTTP Status code
      * @return \Illuminate\Http\JsonResponse The JSON response
      */
-    public function successResponse($data = null, $message = "Operation Done", $status = 200) {
+    public static function successResponse($data = null, $message = "Operation Done", $status = 200)
+    {
         $array = [
             'status' => 'success',
-            'data'=>$data,
-            'message'=>trans($message)
+            'data' => $data,
+            'message' => trans($message)
         ];
 
         return response()->json($array, $status);
@@ -50,11 +51,12 @@ trait ApiResponseTrait
      * @param int $status the HTTP Status code
      * @return \Illuminate\Http\JsonResponse The JSON response
      */
-    public function errorResponse($message = "Operation Faild", $status, $data = null) {
+    public static function errorResponse($message = "Operation Faild", $status, $data = null)
+    {
         $array = [
             'status' => 'error',
-            'data'=>$data,
-            'message'=>trans($message)
+            'data' => $data,
+            'message' => trans($message)
         ];
         return response()->json($array, $status);
     }
@@ -67,14 +69,15 @@ trait ApiResponseTrait
      * @param int $status the HTTP Status code
      * @return \Illuminate\Http\JsonResponse The JSON response
      */
-    public function resourcePaginated($data,$message = 'Operation Success',$status = 200){
+    public static function resourcePaginated($data, $message = 'Operation Success', $status = 200)
+    {
         $paginator = $data->resource;
         $resourceData = $data->items();
 
         $array = [
             'status' => 'success',
-            'message'=>trans($message),
-            'data'=>$resourceData,
+            'message' => trans($message),
+            'data' => $resourceData,
             'pagination' => [
                 'total'        => $paginator->total(),
                 'count'        => $paginator->count(),
@@ -83,6 +86,6 @@ trait ApiResponseTrait
                 'total_pages'  => $paginator->lastPage(),
             ],
         ];
-        return response()->json($array,$status);
+        return response()->json($array, $status);
     }
 }

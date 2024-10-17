@@ -5,15 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
+use App\Services\ApiResponseService;
 use App\Services\AuthService;
-use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    // Trait used to standardize API responses
-    use ApiResponseTrait;
-
     protected $AuthService;
 
     /**
@@ -38,7 +35,7 @@ class AuthController extends Controller
     {
         $registerResult = $this->AuthService->register($request->validated());
 
-        return $this->apiResponse(new UserResource($registerResult['user']), $registerResult['token'], 'User registered successfully', 200);
+        return ApiResponseService::apiResponse(new UserResource($registerResult['user']), $registerResult['token'], 'User registered successfully', 200);
     }
 
     /**
@@ -51,7 +48,7 @@ class AuthController extends Controller
     {
         $loginResult = $this->AuthService->login($request->validated());
 
-        return $this->apiResponse(new UserResource($loginResult['user']), $loginResult['token'], 'Login successful', 200);
+        return ApiResponseService::apiResponse(new UserResource($loginResult['user']), $loginResult['token'], 'Login successful', 200);
     }
 
     /**
@@ -64,6 +61,6 @@ class AuthController extends Controller
     {
         $this->AuthService->logout($request->user());
 
-        return $this->successResponse(null, 'Logged out successfully');
+        return ApiResponseService::successResponse(null, 'Logged out successfully');
     }
 }

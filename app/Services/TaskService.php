@@ -5,6 +5,7 @@ namespace App\Services;
 use app\Traits\ApiResponseTrait;
 use App\Models\Task;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class TaskService
@@ -20,7 +21,9 @@ class TaskService
      */
     public function getPaginatedTasks($per_page, $status)
     {
-        $tasks = Task::query();
+        $user = Auth::user();
+
+        $tasks = $user->tasks();
 
         if (!empty($status)) {
             $tasks = $tasks->status($status);
@@ -28,7 +31,6 @@ class TaskService
 
         return $tasks->paginate($per_page);
     }
-
     /**
      * Create a new task.
      *

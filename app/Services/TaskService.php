@@ -26,7 +26,7 @@ class TaskService
             $tasks = $tasks->status($status);
         }
 
-        return $tasks->paginate($per_page, 10);
+        return $tasks->paginate($per_page);
     }
 
     /**

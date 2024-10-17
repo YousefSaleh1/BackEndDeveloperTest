@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class AuthController extends Controller
     {
         $registerResult = $this->AuthService->register($request->validated());
 
-        return $this->apiResponse($registerResult['user'], $registerResult['token'], 'User registered successfully', 200);
+        return $this->apiResponse(new UserResource($registerResult['user']), $registerResult['token'], 'User registered successfully', 200);
     }
 
     /**
@@ -50,7 +51,7 @@ class AuthController extends Controller
     {
         $loginResult = $this->AuthService->login($request->validated());
 
-        return $this->apiResponse($loginResult['user'], $loginResult['token'], 'Login successful', 200);
+        return $this->apiResponse(new UserResource($loginResult['user']), $loginResult['token'], 'Login successful', 200);
     }
 
     /**

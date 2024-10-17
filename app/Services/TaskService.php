@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services;
+namespace App\Services;
 
 use app\Traits\ApiResponseTrait;
 use App\Models\Task;
@@ -26,7 +26,7 @@ class TaskService
             $tasks = $tasks->status($status);
         }
 
-        return $tasks->paginate($per_page, 10);
+        return $tasks->paginate($per_page);
     }
 
     /**

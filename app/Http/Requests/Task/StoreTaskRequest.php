@@ -30,7 +30,7 @@ class StoreTaskRequest extends FormRequest
             'title'       => 'required|string|max:255',
             'description' => 'required|string|max:1000',
             'status'      => 'required|in:pending,completed',
-            'due_date'    => 'required|date|after_or_equal:today',
+            'due_date'    => 'required|date_format:Y-m-d\TH:i|after_or_equal:now',
         ];
     }
 

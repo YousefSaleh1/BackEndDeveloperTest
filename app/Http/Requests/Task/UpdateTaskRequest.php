@@ -29,7 +29,7 @@ class UpdateTaskRequest extends FormRequest
             'title'       => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1000',
             'status'      => 'nullable|in:pending,completed',
-            'due_date'    => 'nullable|date|after_or_equal:today',
+            'due_date'    => 'nullable|date_format:Y-m-d\TH:i|after_or_equal:now',
         ];
     }
 

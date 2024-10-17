@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Services;
+namespace App\Services;
 
 use app\Traits\ApiResponseTrait;
 use App\Models\Task;

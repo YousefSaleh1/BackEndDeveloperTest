@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Task\StoreTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Models\Task;
-use app\Services\TaskService;
-use app\Traits\ApiResponseTrait;
+use App\Services\TaskService;
+use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller

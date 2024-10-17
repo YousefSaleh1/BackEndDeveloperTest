@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\AuthService;
-use app\Traits\ApiResponseTrait;
+use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -35,9 +35,9 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        $user = $this->AuthService->register($request->validated());
+        $registerResult = $this->AuthService->register($request->validated());
 
-        return $this->successResponse($user, 'User registered successfully', 201);
+        return $this->apiResponse($registerResult['user'], $registerResult['token'], 'User registered successfully', 200);
     }
 
     /**

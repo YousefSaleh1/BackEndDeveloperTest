@@ -22,11 +22,16 @@ class AuthService
     public function register(array $data)
     {
         try {
-            return User::create([
+            $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' =>$data['password'],
+                'password' => $data['password'],
             ]);
+
+            // Create a token for the user and return it
+            $token = $user->createToken($user->email)->plainTextToken;
+
+            return ['user' => $user, 'token' => $token];
         } catch (\Exception $e) {
             // Log the error message for debugging purposes
             Log::error('User registration failed: ' . $e->getMessage());
